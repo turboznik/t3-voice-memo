@@ -128,3 +128,7 @@ The e2e test and `npm run icons` drive your installed Google Chrome through `pla
 
 OpenAI transcription bills per second of audio, and the clean-up is a small call. Together that's well under a cent for a one-minute memo.
 
+
+## License
+
+[MIT](LICENSE)
