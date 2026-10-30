@@ -1,0 +1,24 @@
+# Example systemd user unit. Copy it to ~/.config/systemd/user/, set
+# WorkingDirectory and ALLOWED_LOGINS, then:
+#   systemctl --user daemon-reload && systemctl --user enable --now voice-memo
+#   loginctl enable-linger "$USER"   # keep it running when you're logged out
+[Unit]
+Description=Voice memo (record, transcribe, send to T3 Code)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/t3-voice-memo
+ExecStart=/usr/bin/env node server/server.mjs
+Environment=PORT=8787
+# Your Tailscale login, as `tailscale whois` shows it (comma-separate several).
+Environment=ALLOWED_LOGINS=you@github
+# Optional: where you open T3 Code in the browser, for "Open" links after a send.
+#Environment=T3_PUBLIC_URL=https://your-machine.your-tailnet.ts.net
+MemoryHigh=128M
+MemoryMax=192M
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
